@@ -80,8 +80,8 @@ public class CheeseCatcher : MonoBehaviour
             rb.linearVelocity = Vector2.zero;
             rb.linearDamping = 50f;
         }
+            
 
-        transform.position = transform.position;
         //queso.transform.position = cheeseHoldPoint.position;
         //queso.transform.SetParent(cheeseHoldPoint);
 

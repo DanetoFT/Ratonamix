@@ -21,15 +21,9 @@ public class Ratoncillo : MonoBehaviour
 
     public bool canRotate;
 
-    public Transform[] respawn;
-
-    public int nivelActual;
-
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        nivelActual = 0;
-
         canRotate = true;
         rb = GetComponent<Rigidbody2D>();
         agent = GetComponent<NavMeshAgent>();
@@ -65,10 +59,5 @@ public class Ratoncillo : MonoBehaviour
 
         //float angle = Mathf.Atan2(rotate.y, rotate.x) * Mathf.Rad2Deg;
         //mouseTransform.eulerAngles = new Vector3(0, 0, angle -90);
-    }
-
-    public void Spawner(int nivel)
-    {
-        transform.position = respawn[nivel].position;
     }
 }
