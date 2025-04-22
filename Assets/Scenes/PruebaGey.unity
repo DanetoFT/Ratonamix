@@ -249,7 +249,7 @@ Rigidbody2D:
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
@@ -922,7 +922,7 @@ Transform:
   m_GameObject: {fileID: 1915691746}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.88, y: -3.28, z: 0}
+  m_LocalPosition: {x: -2.07, y: -3.28, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1000,9 +1000,10 @@ MonoBehaviour:
   - {fileID: -6094277614421788490, guid: 5b6a876f62a128148b92e8fa1adc38f3, type: 3}
   - {fileID: -4214472527485607365, guid: 5b6a876f62a128148b92e8fa1adc38f3, type: 3}
   - {fileID: -1708658146566146418, guid: 5b6a876f62a128148b92e8fa1adc38f3, type: 3}
-  spriteChangeDelay: 8
-  particuleTime: 6
+  spriteChangeDelay: 4.69
+  particuleTime: 3.49
   particuleSystem: {fileID: 5577678704554346686, guid: ac8382109f2eab14e8575c0c3a8da3ea, type: 3}
+  dragResistance: 0.5
 --- !u!1 &2011091544
 GameObject:
   m_ObjectHideFlags: 0
@@ -1314,7 +1315,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33cbba920b901d74fac295b2f893d1e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Force: 1500
+  force: 500
   draggable:
     serializedVersion: 2
     m_Bits: 8

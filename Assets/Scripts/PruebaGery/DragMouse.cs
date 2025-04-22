@@ -2,45 +2,64 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
+
 public class DragMouse : MonoBehaviour
 {
-    public float Force = 500f;
+    public float force = 500f;
     public LayerMask draggable;
-    Rigidbody2D Rb;
+    private Rigidbody2D Rb;
+    private CheeseCatcher catcher;
+    
 
+
+    private void Start()
+    {
+        catcher = FindAnyObjectByType<CheeseCatcher>();
+    }
 
     private void FixedUpdate()
     {
         if (Rb)
         {
             Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            mousePos.z = 0; 
-            Vector3 direcion = (mousePos - Rb.transform.position);
-            Rb.linearVelocity = direcion * Force * Time.fixedDeltaTime;
+            mousePos.z = 0;
+            Vector3 direction = (mousePos - Rb.transform.position);
+            float effectiveForce = catcher.IsProcessing(Rb.gameObject) ? force * catcher.dragResistance : force;
+            Rb.linearVelocity = direction * effectiveForce * Time.fixedDeltaTime;
         }
     }
-    void Update()
+
+    private void Update()
     {
-        if (Input.GetMouseButtonDown(0))//es cero porque es el click izquierdo
+        if (Input.GetMouseButtonDown(0))
         {
             Rb = GetRigidbodyFromMouseClick();
+            if (Rb != null && catcher != null)
+            {
+                catcher.StopProcessingQueso(Rb.gameObject);
+            }
         }
         if (Input.GetMouseButtonUp(0))
         {
+            // Congela la posición al soltar
+            if (Rb != null)
+            {
+                Rb.linearVelocity = Vector2.zero;
+                Rb.angularVelocity = 0f;
+                Rb.Sleep(); // Opcional: Detiene cálculos físicos
+            }
             Rb = null;
         }
     }
-    Rigidbody2D GetRigidbodyFromMouseClick()
-    {
-       Vector2 clickPoint = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-       RaycastHit2D hit = Physics2D.Raycast(clickPoint, Vector2.zero,Mathf.Infinity, draggable);
-        if (hit)
-        {
-            if (hit.collider != null)
-            {
-                return hit.collider.gameObject.GetComponent<Rigidbody2D>();
-            }
 
+    private Rigidbody2D GetRigidbodyFromMouseClick()
+    {
+        Vector2 clickPoint = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        RaycastHit2D hit = Physics2D.Raycast(clickPoint, Vector2.zero, Mathf.Infinity, draggable);
+
+        if (hit.collider != null)
+        {
+            return hit.collider.GetComponent<Rigidbody2D>();
         }
         return null;
     }
