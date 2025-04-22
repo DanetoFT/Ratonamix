@@ -4,6 +4,8 @@ using System.Collections.Generic;
 
 public class CheeseCatcher : MonoBehaviour
 {
+    Ratoncillo raton;
+
     public Transform cheeseHoldPoint;
     public Sprite[] cheeseSprites;
     public float spriteChangeDelay;
@@ -13,6 +15,11 @@ public class CheeseCatcher : MonoBehaviour
 
     private Dictionary<GameObject, Coroutine> activeCoroutines = new Dictionary<GameObject, Coroutine>();
     private Dictionary<GameObject, int> currentSpriteIndices = new Dictionary<GameObject, int>(); // Nuevo: Guarda el índice actual
+
+    private void Start()
+    {
+        raton = GetComponent<Ratoncillo>();
+    }
 
     public bool IsProcessing (GameObject queso)
     {
@@ -29,6 +36,8 @@ public class CheeseCatcher : MonoBehaviour
 
             Coroutine coroutine = StartCoroutine(AcopleQueso(other.gameObject, startIndex));
             activeCoroutines.Add(other.gameObject, coroutine);
+
+            raton.canRotate = false;
         }
     }
 
@@ -39,6 +48,8 @@ public class CheeseCatcher : MonoBehaviour
         {
             StopProcessingQueso(other.gameObject);
         }
+
+        raton.canRotate = true;
     }
 
     public void StopProcessingQueso(GameObject queso)
@@ -71,8 +82,8 @@ public class CheeseCatcher : MonoBehaviour
         }
             
 
-        queso.transform.position = cheeseHoldPoint.position;
-        queso.transform.SetParent(cheeseHoldPoint);
+        //queso.transform.position = cheeseHoldPoint.position;
+        //queso.transform.SetParent(cheeseHoldPoint);
 
         SpriteRenderer Sr = queso.GetComponent<SpriteRenderer>();
         if (Sr != null && cheeseSprites.Length > 0)

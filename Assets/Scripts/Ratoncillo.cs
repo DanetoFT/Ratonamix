@@ -19,9 +19,12 @@ public class Ratoncillo : MonoBehaviour
 
     public float rotationSpeed;
 
+    public bool canRotate;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        canRotate = true;
         rb = GetComponent<Rigidbody2D>();
         agent = GetComponent<NavMeshAgent>();
         agent.updateRotation = false;
@@ -48,7 +51,11 @@ public class Ratoncillo : MonoBehaviour
 
         Quaternion targetRotation = Quaternion.LookRotation(transform.forward, rotate);
         Quaternion rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
-        rb.MoveRotation(rotation);
+        
+        if (canRotate)
+        {
+            rb.MoveRotation(rotation);
+        }
 
         //float angle = Mathf.Atan2(rotate.y, rotate.x) * Mathf.Rad2Deg;
         //mouseTransform.eulerAngles = new Vector3(0, 0, angle -90);
